@@ -18,7 +18,7 @@ const ChatScreen = ({ sessionId, onReturnToVideo }) => {
 
   // Auto-return to video screen after inactivity
   useEffect(() => {
-    const INACTIVITY_TIMEOUT = 5 * 60 * 1000; // 5 minutes
+    const INACTIVITY_TIMEOUT = 1 * 60 * 1000; // 5 minutes
 
     const checkInactivity = setInterval(() => {
       if (Date.now() - lastActivity > INACTIVITY_TIMEOUT) {
