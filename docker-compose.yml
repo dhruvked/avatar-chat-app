@@ -1,0 +1,66 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: avatar_chat_db
+    environment:
+      POSTGRES_DB: avatar_chat
+      POSTGRES_USER: dhruv
+      POSTGRES_PASSWORD: password123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./avatar-chat-backend/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    restart: unless-stopped
+    networks:
+      - avatar_network
+
+  backend:
+    build: 
+      context: ./avatar-chat-backend
+      dockerfile: Dockerfile
+    container_name: avatar_chat_backend
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=avatar_chat
+      - DB_USER=dhruv
+      - DB_PASSWORD=password123
+      - PORT=3001
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+    volumes:
+      - ./avatar-chat-backend:/app
+      - /app/node_modules
+    restart: unless-stopped
+    networks:
+      - avatar_network
+
+  frontend:
+    build:
+      context: ./avatar-chat-frontend
+      dockerfile: Dockerfile
+    container_name: avatar_chat_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./avatar-chat-frontend:/app
+      - /app/node_modules
+    restart: unless-stopped
+    networks:
+      - avatar_network
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - REACT_APP_API_URL=http://localhost:3001
+
+volumes:
+  postgres_data:
+
+networks:
+  avatar_network:
+    driver: bridge

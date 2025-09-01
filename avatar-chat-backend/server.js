@@ -1,10 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import pool from './db.js';
-import dotenv from 'dotenv';
 import OpenAI from 'openai';
-
-dotenv.config();
 
 // Initialize OpenAI
 const openai = new OpenAI({
@@ -15,7 +12,10 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://localhost:3001'], // Allow React dev server
+  credentials: true
+}));
 app.use(express.json());
 
 // Test route

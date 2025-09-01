@@ -47,7 +47,9 @@ const ChatScreen = ({ sessionId, onReturnToVideo }) => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:3001/api/chat', {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/api/chat`, 
+        {
         message: userMessage,
         session_id: sessionId,
         avatar_id: 'celebrity_x'
