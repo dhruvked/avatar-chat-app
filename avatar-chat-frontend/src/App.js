@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import VideoScreen from './components/VideoScreen';
 import ChatScreen from './components/ChatScreen';
+import FileUpload from './components/FileUpload';
 import './App.css';
 
 function App() {
-  const [currentScreen, setCurrentScreen] = useState('video'); // 'video' or 'chat'
+  const [currentScreen, setCurrentScreen] = useState('video'); // 'video', 'chat', or 'admin'
   const [sessionId, setSessionId] = useState(null);
 
   const handleStartChat = () => {
@@ -19,15 +20,28 @@ function App() {
     setSessionId(null);
   };
 
+  const handleGoToAdmin = () => {
+    setCurrentScreen('admin');
+  };
+
   return (
     <div className="App">
       {currentScreen === 'video' && (
-        <VideoScreen onStartChat={handleStartChat} />
+        <VideoScreen 
+          onStartChat={handleStartChat}
+          onGoToAdmin={handleGoToAdmin}
+        />
       )}
       {currentScreen === 'chat' && (
         <ChatScreen 
           sessionId={sessionId}
           onReturnToVideo={handleReturnToVideo}
+        />
+      )}
+      {currentScreen === 'admin' && (
+        <FileUpload 
+          avatarId="celebrity_x"
+          onBack={handleReturnToVideo}
         />
       )}
     </div>

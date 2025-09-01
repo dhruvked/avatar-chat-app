@@ -1,9 +1,18 @@
 import React from 'react';
 import './VideoScreen.css';
 
-const VideoScreen = ({ onStartChat }) => {
+const VideoScreen = ({ onStartChat, onGoToAdmin }) => {
   return (
     <div className="video-screen">
+      {/* Admin button */}
+      <button 
+        className="admin-button"
+        onClick={onGoToAdmin}
+        title="Manage Knowledge Base"
+      >
+        ⚙️ Admin
+      </button>
+
       {/* Video Background */}
       <div className="video-container">
         <video
