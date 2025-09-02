@@ -1,3 +1,9 @@
+-- Create database (run this in PostgreSQL first)
+-- CREATE DATABASE avatar_chat;
+
+-- Connect to the avatar_chat database, then run the following:
+
+-- Chats table to store all conversations
 CREATE TABLE chats (
   id SERIAL PRIMARY KEY,
   session_id VARCHAR(255) NOT NULL,
@@ -7,6 +13,9 @@ CREATE TABLE chats (
   device_details JSONB,
   used_rag BOOLEAN DEFAULT FALSE,
   sources JSONB,
+  video_id VARCHAR(255),
+  video_url TEXT,
+  video_status VARCHAR(50) DEFAULT 'pending',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

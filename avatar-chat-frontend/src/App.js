@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import VideoScreen from './components/VideoScreen';
-import ChatScreen from './components/ChatScreen';
+import VideoAvatarScreen from './components/VideoAvatarScreen';
 import FileUpload from './components/FileUpload';
 import './App.css';
 
@@ -33,7 +33,7 @@ function App() {
         />
       )}
       {currentScreen === 'chat' && (
-        <ChatScreen 
+        <VideoAvatarScreen 
           sessionId={sessionId}
           onReturnToVideo={handleReturnToVideo}
         />
